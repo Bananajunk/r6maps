@@ -1,36 +1,33 @@
 'use strict';
 
-var R6MMainSessions = (function($, window, document, R6MLangTerms, undefined) {
-  var setup = function setup($dialog) {
-    var html = '';
+var R6MMainSessions = (function ($, window, document, R6MLangTerms, undefined) {
+  var peer;
+  var conn;
 
-    html += '<h2>Shared Sessions</h2>';
-    html += '<label>Session name';
-    html += '<input type="text" placeholder=""></input>';
-    html += '</label>';
-    html += '<button>Creat/Join</button>';
-    $dialog.html(html);
+  var setup = function () {
+    peer = new Peer();
+
+    peer.on('open', function (id) {
+      $('#collaborate-link').val(id);
+      connect(id);
+    });
   };
 
-  var getOpenFn = function getOpenFn($dialog) {
-    return function() {
-      $.fancybox.open($dialog, {
-        padding: 10,
-        helpers: {
-          overlay: {
-            css: {
-              background: 'rgba(48,113,169, 0.65)'
-            }
-          }
-        }
-      });
-    };
-  };
+  var connect = function (id) {
+    var peerId = id || R6MHelpers.getPeerId();
 
-  return  {
-    createJoinDialog: {
-      setup: setup,
-      getOpenFn: getOpenFn
+    if (peerId) {
+      console.log('Peer ID = ' + peerId);
+      $('#collaborate-link').val(peerId);
+      //peer = new Peer(peerId);
+      //conn = peer.connect(peerId);
+    } else {
+      console.log('Must generate a peer connection');
     }
+  };
+
+  return {
+    setup: setup,
+    connect: connect
   };
 })(window.jQuery, window, document, R6MLangTerms);

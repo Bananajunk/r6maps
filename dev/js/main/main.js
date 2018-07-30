@@ -13,7 +13,6 @@
     $navLogo,
     $body,
     $mainNav,
-    $sessionsDialog,
     SHOW_MAP = 'show-map',
     SHOW_SELECT_MAP = 'show-select-map',
     HASH_SPLIT_CHAR = '/',
@@ -33,9 +32,7 @@
     setupSelectMap();
     R6MMainControls.maps.populate(R6MMainData.getMapData());
 
-    $sessionsDialog = $('#sessions-dialog');
-    R6MMainSessions.createJoinDialog.setup($sessionsDialog);
-
+    R6MMainSessions.connect();
     setupEvents();
     $navLogo.on('click', toggleShowSelectMap);
     tryLoadMenuOptions();
@@ -410,7 +407,7 @@
     R6MMainControls.enableScreenshots.setup(handleEnableScreenshotsChange);
     R6MMainControls.menu.setupSelectMaps(showSelectMap, closeMenu);
     R6MMainControls.menu.setupFullScreen();
-    R6MMainControls.sessions.setup(R6MMainSessions.createJoinDialog.getOpenFn($sessionsDialog), closeMenu);
+    R6MMainControls.sessions.setup(R6MMainSessions.setup, closeMenu);
 
     $(window).on('orientationchange', function() {
       R6MMainControls.pan.reset($mapMains, getResetDimensions);

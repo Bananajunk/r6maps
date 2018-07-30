@@ -36,7 +36,9 @@ var R6MLangTerms = (function(undefined) {
         linkLatestUpdate: 'about/updates/2017-Feb/index.html'
       },
       sessions: {
-        button: 'Sessions (BETA)'
+        label: 'Collaborate',
+        button: 'Generate',
+        instructions: 'Generate link >>'
       },
       roomLabelStyles: {
         Dark: 'Dark',

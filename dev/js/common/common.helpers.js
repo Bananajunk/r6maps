@@ -40,10 +40,23 @@ var R6MHelpers = (function($, window, document, undefined) {
     return false;
   };
 
+  var getPeerId = function getPeerId() {
+    var url = window.location.href;
+    var regex = new RegExp('[?&]peerId(=([^&#]*)|&|#|$)');
+    var results = regex.exec(url);
+
+    if (!(results && results[2])) {
+      return null;
+    } else {
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+  };
+
   return {
     queryString: queryString,
     tryChangeDirection: tryChangeDirection,
     tryLoadStartingLanguage: tryLoadStartingLanguage,
-    trySelectOption: trySelectOption
+    trySelectOption: trySelectOption,
+    getPeerId: getPeerId
   };
 })(window.jQuery, window, document);

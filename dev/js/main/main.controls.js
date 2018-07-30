@@ -246,6 +246,14 @@ var R6MMainControls = (function($, window, document, R6MLangTerms, undefined) {
     html += '<input type="checkbox" id="enable-screenshtos" checked>' + R6MLangTerms.terms.general.enableScreenshots + '</input>';
     html += '</div>';
 
+    html += '<hr>';
+
+    html += '<div id="collaborate-wrapper">';
+    html += '<label id="collaborate-label">' + R6MLangTerms.terms.sessions.label + '</label>';
+    html += '<input id="collaborate-link" placeholder="' + R6MLangTerms.terms.sessions.instructions + '" disabled/>';
+    html += '<button id="generate-session">' + R6MLangTerms.terms.sessions.button + '</button>';
+    html += '</div>';
+
     html += '</div>';
 
     return html;
@@ -266,7 +274,6 @@ var R6MMainControls = (function($, window, document, R6MLangTerms, undefined) {
     if (isFullScreenAvailable()) {
       html += '<button href="" id="full-screen">' + R6MLangTerms.terms.general.fullScreen + '</button>';
     }
-    html += '<button class="feature-flagged" id="menu-sessions-launcher">' + R6MLangTerms.terms.sessions.button + '</button>';
     html += '</div>';
     return html;
   };
@@ -366,7 +373,7 @@ var R6MMainControls = (function($, window, document, R6MLangTerms, undefined) {
     $enableScreenshotsControl = $('#enable-screenshtos');
     $fullScreenControl = $('#full-screen');
     $menuSelectMapsControl = $('#menu-select-maps');
-    $sessionsControl = $('#menu-sessions-launcher');
+    $sessionsControl = $('#generate-session');
   };
 
   var menuSetupFullScreen = function menuSetupFullScreen() {
@@ -436,17 +443,11 @@ var R6MMainControls = (function($, window, document, R6MLangTerms, undefined) {
     return R6MHelpers.trySelectOption($roomLabelStylesControl, style);
   };
 
-  var sessionsEnable = function sessionsEnable() {
-    $sessionsControl.removeClass('feature-flagged');
-  };
-
   var sessionsSetupClickEvent = function sessionsSetupClickEvent(
-    sessionsLaunchCallback,
-    closeMenuCallback
+    sessionsLaunchCallback
   ) {
     $sessionsControl.on('click', function(event) {
       event.preventDefault();
-      closeMenuCallback();
       sessionsLaunchCallback();
     });
   };
@@ -671,7 +672,6 @@ var R6MMainControls = (function($, window, document, R6MLangTerms, undefined) {
       trySelect: roomLabelStylesTrySelect
     },
     sessions: {
-      enable: sessionsEnable,
       setup: sessionsSetupClickEvent
     },
     zoom: {
